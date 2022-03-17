@@ -1,0 +1,74 @@
+﻿USE [EmpDBnoEntity]
+---------------------------------------------------------------------------------------------------
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+---------------------------------------------------------------------------------------------------
+CREATE TABLE [dbo].[Emp](
+	[EmpID] [int] IDENTITY(1,1) NOT NULL,
+	[EmpName] [varchar](20) NULL,
+	[EmpPhoneNo] [varchar](10) NULL,
+ CONSTRAINT [PK_Emp] PRIMARY KEY CLUSTERED 
+(
+	[EmpID] ASC
+) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, 
+	ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+--------------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[usp_Add]
+	@EmpID INT,
+	@EmpName VARCHAR(20),
+	@EmpPhoneNo VARCHAR(10)
+AS
+BEGIN
+	SET NOCOUNT ON
+	INSERT INTO Emp (EmpName, EmpPhoneNo) VALUES (@EmpName, @EmpPhoneNo)
+END
+--------------------------------------------------------------------------------------------------
+GO
+CREATE PROCEDURE [dbo].[usp_Edit]
+	@EmpID INT,
+	@EmpName VARCHAR(20),
+	@EmpPhoneNo VARCHAR(10)
+AS
+BEGIN
+	UPDATE Emp
+	SET EmpName = @EmpName,
+		EmpPhoneNo = @EmpPhoneNo
+	WHERE EmpId = @EmpID
+END
+GO
+---------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[usp_Delete]
+	@EmpID INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DELETE Emp
+	WHERE EmpId = @EmpID
+END
+GO
+---------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[usp_View]
+	@EmpID INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+	select * 
+	FROM Emp
+	WHERE EmpId = @EmpID
+END
+GO
+---------------------------------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[usp_ViewAll]
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SELECT * 
+	FROM Emp
+END
+GO
+----------------------------------------------------------------------------------------------
